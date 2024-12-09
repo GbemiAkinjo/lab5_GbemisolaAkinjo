@@ -1,0 +1,26 @@
+name: Deploy to FTP
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Deploy to FTP server
+        uses: SamKirkland/FTP-Deploy-Action@4.3.0
+        with:
+          server: ftp.shivaprogramming.com
+          username: ${{ secrets.ftp_username }}
+          password: ${{ secrets.ftp_password }}
+          local-dir: ./
+          server-dir: /IS436/lab5
+
+git add .github/workflows/deploy.yml
+git commit -m "Add CI/CD workflow for FTP deployment"
+git push origin main
